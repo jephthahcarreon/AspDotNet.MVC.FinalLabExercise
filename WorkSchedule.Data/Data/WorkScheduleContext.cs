@@ -25,7 +25,7 @@ namespace WorkSchedule.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=GMMBQG3;Database=WorkSchedule;User Id=sa;Password=p@ssw0rd");
+                optionsBuilder.UseSqlServer("Server=server;Database=WorkSchedule;User Id=sa;Password=password");
             }
         }
     }
