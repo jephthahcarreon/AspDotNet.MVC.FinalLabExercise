@@ -10,8 +10,15 @@ namespace WorkSchedule.Data
 {
     public class WorkScheduleContext : DbContext
     {
+        private readonly string connectionString;
+
         public WorkScheduleContext(DbContextOptions<WorkScheduleContext> options) : base(options)
         {
+        }
+
+        public WorkScheduleContext(string connectionString)
+        {
+            this.connectionString = connectionString;
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeSkill> EmployeeSkills { get; set; }
@@ -25,7 +32,7 @@ namespace WorkSchedule.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=server;Database=WorkSchedule;User Id=sa;Password=password");
+                optionsBuilder.UseSqlServer(this.connectionString);
             }
         }
     }

@@ -57,7 +57,7 @@ namespace WorkSchedule.Data.Migrations
                             'Analytical'
                         ),
                         (
-                            'MS-Ofice'
+                            'MS-Office'
                         ),
                         (
                             'Initiative'
@@ -72,7 +72,7 @@ namespace WorkSchedule.Data.Migrations
                             'Interpersonal Skill'
                         ),
                         (
-                            'Scheduling'
+                            'Fullstack development'
                         )
                     "
                 );

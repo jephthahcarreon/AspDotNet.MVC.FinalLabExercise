@@ -33,6 +33,17 @@ namespace WorkSchedule.Data.Repositories
                                     SkillDescription = s.Description
                                 };
 
+            //var employeeSkillsList = this.Context.EmployeeSkills.Join(this.Context.Skills,
+            //                         employeeSkill => employeeSkill.SkillID,
+            //                         skill => skill.ID,
+            //                         (employeeSkill, skill) => new EmployeeSkillsDTO
+            //                         {
+            //                             EmployeeID = employeeSkill.ID,
+            //                             SkillID = skill.ID,
+            //                             SkillDescription = skill.Description
+            //                         }
+            //                         );
+
             if (employeeSkills != null)
             {
                 return employeeSkills.ToList();

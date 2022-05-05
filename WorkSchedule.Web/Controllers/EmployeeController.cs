@@ -24,8 +24,9 @@ namespace WorkSchedule.Web.Controllers
         [Route("employees")]
         public IActionResult Index()
         {
-            var employeeList = employeeService.GetEmployeePage(1, 10);
-            return View(employeeList);
+            //var employeeList = employeeService.GetEmployeePage(1, 10);
+            //return View(employeeList);
+            return Index(1, 10);
         }
 
         [HttpPost]
@@ -100,17 +101,7 @@ namespace WorkSchedule.Web.Controllers
         public async Task<IActionResult> AddSkill(int EmployeeId, int SkillId)
         {
             var exists = this.unitOfWork.EmployeeSkillsRepository.checkExistingSkill(EmployeeId, SkillId);
-            if (!exists)
-            {
-                var newSkill = new EmployeeSkill
-                {
-                    EmployeeID = EmployeeId,
-                    SkillID = SkillId
-                };
-                this.unitOfWork.EmployeeSkillsRepository.Insert(newSkill);
-                await this.unitOfWork.CommitAsync();
-            }
-            else
+            if (exists)
             {
                 ViewBag.Error = "Skill Already Exists";
                 ViewData["Action"] = "Edit";
@@ -119,45 +110,17 @@ namespace WorkSchedule.Web.Controllers
                 ViewBag.SkillList = this.unitOfWork.SkillsRepository.FindAll();
                 return View("Form", employee);
             }
-
-            return Redirect("Edit?Id=" + EmployeeId);
+            else
+            {
+                var newSkill = new EmployeeSkill
+                {
+                    EmployeeID = EmployeeId,
+                    SkillID = SkillId
+                };
+                this.unitOfWork.EmployeeSkillsRepository.Insert(newSkill);
+                await this.unitOfWork.CommitAsync();
+                return Redirect("Edit?Id=" + EmployeeId);
+            }
         }
-
-        //public async Task<IActionResult> SaveSkill(int employeeId, int skillId, string skillName)
-        //{
-        //    var employee = this.unitOfWork.EmployeeRepository.FindByPrimaryKey(employeeId);
-        //    if (this.unitOfWork.SkillsRepository.FindByPrimaryKey(skillId) == null)
-        //    {
-        //        var newSkill = new Skill()
-        //        {
-        //            ID = skillId,
-        //            Description = skillName
-        //        };
-        //        this.unitOfWork.SkillsRepository.Insert(newSkill);
-        //        await this.unitOfWork.CommitAsync();
-
-        //        var employeeSkill = new EmployeeSkill()
-        //        {
-        //            ID = (employee.EmployeeSkills.Count + 1),
-        //            EmployeeID = employeeId,
-        //            Skills = newSkill
-        //        };
-        //        this.unitOfWork.EmployeeSkillsRepository.Insert(employeeSkill);
-        //        await this.unitOfWork.CommitAsync();
-        //    }
-        //    else
-        //    {
-        //        ViewData["Action"] = "Invalid input: Skill ID already exist.";
-        //        return View("Form", employee);
-        //    }
-        //    return View("Form", employee);
-        //}
-
-        //public async Task<IActionResult> RemoveSkill(int id)
-        //{
-        //    var employeeSkill = this.unitOfWork.EmployeeSkillsRepository.Delete(id);
-        //    await this.unitOfWork.CommitAsync();
-        //    return RedirectToAction("Index");
-        //}
     }
 }

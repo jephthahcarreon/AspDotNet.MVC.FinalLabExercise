@@ -19,7 +19,7 @@ namespace WorkSchedule.Data.Repositories
         T Delete(int id);
         WorkScheduleContext Context { get; set; }
     }
-    public class GenericRepository<T> where T : class
+    public abstract class GenericRepository<T> where T : class
     {
         public GenericRepository(WorkScheduleContext context)
         {
